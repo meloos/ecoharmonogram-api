@@ -16,6 +16,13 @@ def test_health():
     assert response.json() == {"status": "ok"}
 
 
+def test_public_cors_headers_present():
+    response = client.get("/health", headers={"Origin": "https://tickland.life"})
+
+    assert response.status_code == 200
+    assert response.headers.get("access-control-allow-origin") == "*"
+
+
 def test_towns_uses_client(monkeypatch):
     class FakeClient:
         def __init__(self, app=None):

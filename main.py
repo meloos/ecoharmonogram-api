@@ -1,4 +1,5 @@
 from fastapi import FastAPI, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
 
 from ecoharmonogram_client import EcoharmonogramClient
@@ -26,7 +27,15 @@ class TownLookupRequest(BaseModel):
     community: str = ""
 
 
-app = FastAPI(title="Ecoharmonogram API", version="1.0.0")
+app = FastAPI(title="Ecoharmonogram API", version="1.0.2")
+
+# Intentionally permissive for public browser access.
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 
 @app.get("/health")

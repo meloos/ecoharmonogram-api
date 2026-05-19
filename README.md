@@ -40,6 +40,14 @@ Server starts at `http://127.0.0.1:8000`.
 - `POST /towns` — lookup towns (`getTowns` / `getTownsForCommunity`).
 - `POST /schedule` — resolve all collection dates and waste types for an address.
 
+## CORS
+
+The API is intentionally configured for public browser access:
+
+- `Access-Control-Allow-Origin: *`
+- all methods allowed
+- all headers allowed
+
 ## Example: schedule request
 
 ```bash
@@ -117,11 +125,11 @@ If you want Flux to pull charts as OCI artifacts, switch Helm publishing back to
 3. Create and push tag, for example:
 
 ```bash
-git tag -a v1.0.0 -m "Release v1.0.0"
-git push origin v1.0.0
+git tag -a v1.0.2 -m "Release v1.0.2"
+git push origin v1.0.2
 ```
 
 After tag push:
 
-- Docker image is available at `ghcr.io/meloos/ecoharmonogram-api:v1.0.0`.
+- Docker image is available at `ghcr.io/meloos/ecoharmonogram-api:v1.0.2`.
 - Helm chart archive is attached to the GitHub Release as `ecoharmonogram-api-<version>.tgz`.
