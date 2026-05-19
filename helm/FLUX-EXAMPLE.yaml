@@ -1,15 +1,16 @@
 ---
 # Example Flux HelmRelease for deploying ecoharmonogram-api
 # Place this in your Flux GitOps repository and update values as needed
-apiVersion: source.toolkit.fluxcd.io/v1beta2
-kind: HelmRepository
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: GitRepository
 metadata:
-  name: ecoharmonogram-charts
+  name: ecoharmonogram-api-source
   namespace: flux-system
 spec:
   interval: 10m
-  url: oci://ghcr.io/meloos
-  type: oci
+  url: https://github.com/meloos/ecoharmonogram-api
+  ref:
+    tag: v1.0.0
 ---
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
@@ -20,11 +21,10 @@ spec:
   interval: 10m
   chart:
     spec:
-      chart: ecoharmonogram-api
-      version: "1.0.0"
+      chart: ./helm/ecoharmonogram-api
       sourceRef:
-        kind: HelmRepository
-        name: ecoharmonogram-charts
+        kind: GitRepository
+        name: ecoharmonogram-api-source
         namespace: flux-system
   values:
     replicaCount: 1

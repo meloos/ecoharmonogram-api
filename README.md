@@ -89,7 +89,7 @@ Behavior:
 
 - Push or PR runs tests and syntax checks.
 - Push to `main` publishes Docker image tags (`main`, `sha-*`, `latest`).
-- Tag `v*` publishes Docker release tag and Helm chart release.
+- Tag `v*` publishes Docker release tag and uploads Helm chart `.tgz` to the GitHub Release.
 
 ## Helm Chart
 
@@ -107,7 +107,8 @@ Flux sample manifest:
 
 - helm/FLUX-EXAMPLE.yaml
 
-It uses an OCI HelmRepository at `oci://ghcr.io/meloos` and installs chart `ecoharmonogram-api`.
+Note: The current Helm publish workflow uploads chart files to GitHub Releases (not OCI).
+If you want Flux to pull charts as OCI artifacts, switch Helm publishing back to `helm push oci://...`.
 
 ## Release Flow
 
@@ -123,4 +124,4 @@ git push origin v1.0.0
 After tag push:
 
 - Docker image is available at `ghcr.io/meloos/ecoharmonogram-api:v1.0.0`.
-- Helm chart is available in GHCR OCI namespace `ghcr.io/meloos`.
+- Helm chart archive is attached to the GitHub Release as `ecoharmonogram-api-<version>.tgz`.
