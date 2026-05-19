@@ -1,0 +1,16 @@
+apiVersion: v2
+name: ecoharmonogram-api
+description: FastAPI service for Ecoharmonogram schedule data
+type: application
+version: 1.0.0
+appVersion: "1.0.0"
+keywords:
+  - ecoharmonogram
+  - fastapi
+  - waste
+home: https://github.com/meloos/ecoharmonogram-api
+sources:
+  - https://github.com/meloos/ecoharmonogram-api
+maintainers:
+  - name: Michal Lemke
+    email: contact@michallemke.com

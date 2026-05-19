@@ -69,3 +69,58 @@ curl -X POST http://127.0.0.1:8000/schedule \
   ]
 }
 ```
+
+## Testing
+
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt -r requirements-dev.txt
+pytest -q
+```
+
+## CI/CD
+
+- CI workflow: .github/workflows/ci.yml
+- Docker publish workflow: .github/workflows/docker-publish.yml
+- Helm publish workflow: .github/workflows/helm-publish.yml
+
+Behavior:
+
+- Push or PR runs tests and syntax checks.
+- Push to `main` publishes Docker image tags (`main`, `sha-*`, `latest`).
+- Tag `v*` publishes Docker release tag and Helm chart release.
+
+## Helm Chart
+
+Chart location: helm/ecoharmonogram-api
+
+Package locally:
+
+```bash
+helm package ./helm/ecoharmonogram-api
+```
+
+## Flux Example
+
+Flux sample manifest:
+
+- helm/FLUX-EXAMPLE.yaml
+
+It uses an OCI HelmRepository at `oci://ghcr.io/meloos` and installs chart `ecoharmonogram-api`.
+
+## Release Flow
+
+1. Update chart version in `helm/ecoharmonogram-api/Chart.yaml`.
+2. Commit and push to `main`.
+3. Create and push tag, for example:
+
+```bash
+git tag -a v1.0.0 -m "Release v1.0.0"
+git push origin v1.0.0
+```
+
+After tag push:
+
+- Docker image is available at `ghcr.io/meloos/ecoharmonogram-api:v1.0.0`.
+- Helm chart is available in GHCR OCI namespace `ghcr.io/meloos`.
